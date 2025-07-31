@@ -80,6 +80,20 @@ BankManagementSystem/
 ├── com.bank.exception/ # Custom exception handling
 └── README.md # Project documentation
 
+---
+
+## 🗃️ Database Setup
+
+All necessary SQL for table creation and sample data is included in:
+
+📄 `sql/bank_schema.sql`
+
+To set up the database:
+
+1. Open MySQL Workbench
+2. Open `bank_schema.sql`
+3. Execute the script
+4. Ensure the DB name is `bank_management_system` as used in the project
 
 ---
 
