@@ -80,23 +80,24 @@ public class AdminServiceLayer {
 							} else {
 								System.err.println("No Pending Requests...");
 							}
-							break;
 						}
+						break;
 						case 3: {
 							adminDAO.activateAllAccounts("pending");
-							break;
 						}
+						break;
 						case 4: {
 							activateAccs = false;
-							break;
 						}
+						break;
 						default: {
 							System.err.println("Invalid Choice...");
-							break;
 						}
+						break;
 						}
 					}
 				}
+				break;
 				case 3: {
 					boolean closeAccounts = true;
 					while (closeAccounts) {
@@ -113,7 +114,7 @@ public class AdminServiceLayer {
 									e.printStackTrace();
 								}
 							} else {
-								System.out.println("No Data Found");
+								System.out.println("No Acc Closing Requests Found");
 							}
 						}
 							break;
@@ -133,7 +134,14 @@ public class AdminServiceLayer {
 						}
 							break;
 						case 3: {
-							System.out.println("Close All Accounts");
+							if(adminDAO.closeAllCustomerAcc())
+							{
+								System.out.println("All Accounts Closed");
+							}
+							else
+							{
+								System.err.println("No Acc Closing Requests");
+							}
 						}
 							break;
 						case 4: {
@@ -150,12 +158,12 @@ public class AdminServiceLayer {
 				}
 				case 4: {
 					start = false;
-					break;
 				}
+				break;
 				default: {
 					System.out.println("Invalid Request");
-					break;
 				}
+				break;
 				}
 			}
 		} else {
@@ -189,7 +197,7 @@ public class AdminServiceLayer {
 				System.out.println("Customer Gender     : " + rs.getString("Customer_Gender"));
 				System.out.println("Customer Acc Number : " + rs.getLong("Customer_Account_Number"));
 				System.out.println("Customer Pin        : " + rs.getLong("Customer_Pin"));
-				System.out.println("Customer Ammount    : " + rs.getInt("Customer_Ammount"));
+				System.out.println("Customer Ammount    : " + rs.getInt("Customer_Amount"));
 				System.out.println("Customer Status     : " + rs.getString("Customer_Status"));
 				System.out.println("=====================================================");
 			}

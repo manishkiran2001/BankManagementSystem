@@ -2,69 +2,69 @@ package com.bank.DTO;
 
 public class CustomerStatement {
 
-	private String transaction_Type;
-	private int transaction_Ammount;
-	private int balance_Ammount;
-	private Long customer_AccNum;
-	private String transaction_Date_And_Time;
+	private String transactionType;
+	private int transactionAmount;
+	private int balanceAmount;
+	private Long customerAccNum;
+	private String transactionDateAndTime;
 
 	public CustomerStatement() {
 	}
 
-	public CustomerStatement(String transaction_Type, int transaction_Ammount, int balance_Ammount,
-			Long customer_AccNum, String transaction_Date_And_Time) {
-		this.transaction_Type = transaction_Type;
-		this.transaction_Ammount = transaction_Ammount;
-		this.balance_Ammount = balance_Ammount;
-		this.customer_AccNum = customer_AccNum;
-		this.transaction_Date_And_Time = transaction_Date_And_Time;
+	public CustomerStatement(String transactionType, int transactionAmount, int balanceAmount, Long customerAccNum,
+			String transactionDateAndTime) {
+		this.transactionType = transactionType;
+		this.transactionAmount = transactionAmount;
+		this.balanceAmount = balanceAmount;
+		this.customerAccNum = customerAccNum;
+		this.transactionDateAndTime = transactionDateAndTime;
 	}
 
-	public String getTransaction_Type() {
-		return transaction_Type;
+	public String getTransactionType() {
+		return transactionType;
 	}
 
-	public void setTransaction_Type(String transaction_Type) {
-		this.transaction_Type = transaction_Type;
+	public void setTransactionType(String transactionType) {
+		this.transactionType = transactionType;
 	}
 
-	public int getTransaction_Ammount() {
-		return transaction_Ammount;
+	public int getTransactionAmount() {
+		return transactionAmount;
 	}
 
-	public void setTransaction_Ammount(int transaction_Ammount) {
-		this.transaction_Ammount = transaction_Ammount;
+	public void setTransactionAmount(int transactionAmount) {
+		this.transactionAmount = transactionAmount;
 	}
 
-	public int getBalance_Ammount() {
-		return balance_Ammount;
+	public int getBalanceAmount() {
+		return balanceAmount;
 	}
 
-	public void setBalance_Ammount(int balance_Ammount) {
-		this.balance_Ammount = balance_Ammount;
+	public void setBalanceAmount(int balanceAmount) {
+		this.balanceAmount = balanceAmount;
 	}
 
-	public Long getCustomer_AccNum() {
-		return customer_AccNum;
+	public Long getCustomerAccNum() {
+		return customerAccNum;
 	}
 
-	public void setCustomer_AccNum(Long customer_AccNum) {
-		this.customer_AccNum = customer_AccNum;
+	public void setCustomerAccNum(Long customerAccNum) {
+		this.customerAccNum = customerAccNum;
 	}
 
-	public String getTransaction_Date_And_Time() {
-		return transaction_Date_And_Time;
+	public String getTransactionDateAndTime() {
+		return transactionDateAndTime;
 	}
 
-	public void setTransaction_Date_And_Time(String transaction_Date_And_Time) {
-		this.transaction_Date_And_Time = transaction_Date_And_Time;
+	public void setTransactionDateAndTime(String transactionDateAndTime) {
+		this.transactionDateAndTime = transactionDateAndTime;
 	}
 
+	
 	@Override
 	public String toString() {
-		return "CustomerStatement [transaction_Type=" + transaction_Type + ", transaction_Ammount="
-				+ transaction_Ammount + ", balance_Ammount=" + balance_Ammount + ", customer_AccNum=" + customer_AccNum
-				+ ", transaction_Date_And_Time=" + transaction_Date_And_Time + "]";
+		return "CustomerStatement [transactionType=" + transactionType + ", transactionAmount=" + transactionAmount
+				+ ", balanceAmount=" + balanceAmount + ", customerAccNum=" + customerAccNum
+				+ ", transactionDateAndTime=" + transactionDateAndTime + "]";
 	}
-
 }

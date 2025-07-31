@@ -17,7 +17,7 @@ public class AdminDAO {
 	private static final String changeAccStatus = "update customer_details set Customer_Status='active',Customer_Account_Number=?,Customer_Pin=? where Customer_Id=? and Customer_Status='pending'";
 	private static final String accClosingRequsts = "select * from customer_details where Customer_Status='close'";
 	private static final String closeAccById = "update customer_details set Customer_Status='closed' where Customer_Id=?";
-
+	private static final String closeAllAcc="update customer_details set Customer_Status='closed' where Customer_Status='close'";
 	CustomerDAO customerDao = new CustomerDAO();
 
 	public boolean selectAdmindetailsByUsingEmailAndPassword(String adminEmail, String adminPassword) {
@@ -175,6 +175,18 @@ public class AdminDAO {
 		try (Connection con = DatabaseConnection.jdbcSteps();
 				PreparedStatement ps = con.prepareStatement(closeAccById)) {
 			ps.setInt(1, customerId);
+			int rowsAffected = ps.executeUpdate();
+			return rowsAffected > 0;
+		} catch (SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	//close all Accounts
+	public boolean closeAllCustomerAcc() {
+		try (Connection con = DatabaseConnection.jdbcSteps();
+				PreparedStatement ps = con.prepareStatement(closeAllAcc)) {
 			int rowsAffected = ps.executeUpdate();
 			return rowsAffected > 0;
 		} catch (SQLException | ClassNotFoundException e) {

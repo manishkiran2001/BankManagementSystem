@@ -9,7 +9,7 @@ public class CustomerDetails {
 	private String address;
 	private String gender;
 	private long accountNumber;
-	private double ammount;
+	private double amount;
 	private int pin;
 	private String status;
 
@@ -18,7 +18,7 @@ public class CustomerDetails {
 	}
 
 	public CustomerDetails(String name, String emailId, long mobileNumber, long aadharNumber, String address,
-			String gender, long accountNumber, double ammount, int pin, String status) {
+			String gender, long accountNumber, double amount, int pin, String status) {
 		this.name = name;
 		this.emailId = emailId;
 		this.mobileNumber = mobileNumber;
@@ -26,7 +26,7 @@ public class CustomerDetails {
 		this.address = address;
 		this.gender = gender;
 		this.accountNumber = accountNumber;
-		this.ammount = ammount;
+		this.amount = amount;
 		this.pin = pin;
 		this.status = status;
 	}
@@ -87,12 +87,12 @@ public class CustomerDetails {
 		this.accountNumber = accountNumber;
 	}
 
-	public double getAmmount() {
-		return ammount;
+	public double getAmount() {
+		return amount;
 	}
 
-	public void setAmmount(double ammount) {
-		this.ammount = ammount;
+	public void setAmount(double amount) {
+		this.amount = amount;
 	}
 
 	public int getPin() {
@@ -115,7 +115,7 @@ public class CustomerDetails {
 	public String toString() {
 		return "CustomerDetails [name=" + name + ", emailId=" + emailId + ", mobileNumber=" + mobileNumber
 				+ ", aadharNumber=" + aadharNumber + ", address=" + address + ", gender=" + gender + ", accountNumber="
-				+ accountNumber + ", ammount=" + ammount + ", pin=" + pin + "]";
+				+ accountNumber + ", amount=" + amount + ", pin=" + pin + "]";
 	}
 
 }

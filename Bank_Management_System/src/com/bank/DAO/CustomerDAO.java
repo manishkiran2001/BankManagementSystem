@@ -8,23 +8,20 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.bank.DTO.CustomerDetails;
-import com.bank.DTO.CustomerStatement;
 import com.bank.steps.DatabaseConnection;
 
 public class CustomerDAO {
 
 	private final static String insert = "insert into customer_details(Customer_Name, Customer_Email, "
 			+ "Customer_MobileNum, Customer_Aadhar_Number, Customer_Address, Customer_Gender,"
-			+ "Customer_Ammount,Customer_Status) values (?,?,?,?,?,?,?,?)";
+			+ "Customer_Amount,Customer_Status) values (?,?,?,?,?,?,?,?)";
 
 	private final static String selectAllCustomers = "SELECT * FROM customer_details";
 	private final static String getCdetails = "select * from customer_details where (Customer_Email=? or Customer_Account_Number=?) and Customer_Pin=? and Customer_Status='active'";
 	private final static String getCustomerBalance = "Select * from customer_details where Customer_Account_Number=?";
-	private final static String depositAmmount = "update customer_details set Customer_Ammount=? where Customer_Account_Number=?";
+	private final static String depositAmount = "update customer_details set Customer_Amount=? where Customer_Account_Number=?";
 	private final static String updatePin = "update customer_details set Customer_Pin=? where Customer_Account_Number=? and Customer_Pin=?";
 	private final static String closeAccountRequest = "update customer_details set Customer_Status='close' where Customer_Account_Number=?";
-	private final static String insertCustomerStatement = "insert into customer_statement(Transaction_Type, Transaction_Ammount, Balance_Ammount, Customer_AccNum, Transaction_Date_And_Time) values(?,?,?,?,?)";
-	private final static String getCustomerStatement = "select * from customer_statement where Customer_AccNum=?";
 
 	private static Connection connect = null;
 	private static PreparedStatement ps = null;
@@ -50,7 +47,7 @@ public class CustomerDAO {
 			ps.setLong(4, c.getAadharNumber());
 			ps.setString(5, c.getAddress());
 			ps.setString(6, c.getGender());
-			ps.setDouble(7, c.getAmmount());
+			ps.setDouble(7, c.getAmount());
 			ps.setString(8, c.getStatus());
 			int rows = ps.executeUpdate();
 			return rows > 0;
@@ -116,7 +113,7 @@ public class CustomerDAO {
 			ps.setLong(1, accNum);
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
-				return rs.getInt("Customer_Ammount");
+				return rs.getInt("Customer_Amount");
 			}
 			return 0;
 		} catch (SQLException | ClassNotFoundException e) {
@@ -125,13 +122,13 @@ public class CustomerDAO {
 		}
 	}
 
-	// Deposit ammount
-	public boolean depositAmmount(int ammount, long accNum) {
+	// Deposit amount
+	public boolean depositAmount(int amount, long accNum) {
 		try {
 			Connection connect = DatabaseConnection.jdbcSteps();
-			PreparedStatement ps = connect.prepareStatement(depositAmmount);
-			ammount = ammount + getBalance(accNum);
-			ps.setInt(1, ammount);
+			PreparedStatement ps = connect.prepareStatement(depositAmount);
+			amount = amount + getBalance(accNum);
+			ps.setInt(1, amount);
 			ps.setLong(2, accNum);
 			return ps.executeUpdate() > 0;
 		} catch (SQLException | ClassNotFoundException e) {
@@ -140,13 +137,13 @@ public class CustomerDAO {
 		}
 	}
 
-	// withdraw ammount
-	public boolean withdrawAmmount(int ammount, long accNum) {
+	// withdraw amount
+	public boolean withdrawAmmount(int amount, long accNum) {
 		try {
 			Connection connect = DatabaseConnection.jdbcSteps();
-			PreparedStatement ps = connect.prepareStatement(depositAmmount);
-			ammount = getBalance(accNum) - ammount;
-			ps.setInt(1, ammount);
+			PreparedStatement ps = connect.prepareStatement(depositAmount);
+			amount = getBalance(accNum) - amount;
+			ps.setInt(1, amount);
 			ps.setLong(2, accNum);
 			return ps.executeUpdate() > 0;
 		} catch (SQLException | ClassNotFoundException e) {

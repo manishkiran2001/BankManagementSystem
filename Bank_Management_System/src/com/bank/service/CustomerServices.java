@@ -29,7 +29,7 @@ public class CustomerServices {
 			try {
 				System.out.println("Enter the Customer Name");
 				String name = sc.nextLine();
-				if (name.matches("[A-Za-z]+[ ]*[A-Za-z]*")) {
+				if (name.matches("^[A-Za-z ]{2,50}$")) {
 					cd.setName(name);
 					break;
 				} else {
@@ -109,14 +109,14 @@ public class CustomerServices {
 				System.out.println("Enter Customer Address");
 				sc.nextLine();
 				String address = sc.nextLine();
-				if (address.matches("[A-Za-z0-9/\\- ]+")) {
+				if (!address.isEmpty() && address.matches("^[A-Za-z0-9.,#/\\- ]{5,100}$")) {
 					cd.setAddress(address);
 					break;
 				} else {
 					throw new InvalidCustomerDetailsException("Invalid Customer Address");
 				}
 			} catch (InvalidCustomerDetailsException n) {
-				System.err.println("Invalid Customer Address");
+				System.err.println(n.getExceptionMsg());
 			}
 		}
 
@@ -125,7 +125,7 @@ public class CustomerServices {
 			try {
 				System.out.println("Enter Customer Gender");
 				String gender = sc.next();
-				if (gender.matches("[A-za-z]+")) {
+				if (gender.matches("(?i)male|female|others")) {
 					cd.setGender(gender);
 					break;
 				} else {
@@ -136,20 +136,20 @@ public class CustomerServices {
 			}
 		}
 
-		// Ammount
+		// Amount
 		while (true) {
 			try {
-				System.out.println("Enter the Ammount");
-				double ammount = sc.nextInt();
+				System.out.println("Enter the Amount");
+				double amount = sc.nextInt();
 				String a = "";
-				if ((a + ammount).matches("[0-9/.]*")) {
-					cd.setAmmount(ammount);
+				if ((a + amount).matches("[0-9/.]*")) {
+					cd.setAmount(amount);
 					break;
 				} else {
-					throw new InvalidCustomerDetailsException("Invalid Customer Ammount");
+					throw new InvalidCustomerDetailsException("Invalid Customer Amount");
 				}
 			} catch (InvalidCustomerDetailsException | InputMismatchException a) {
-				System.err.println("Invalid Customer Ammount");
+				System.err.println("Invalid Customer Amount");
 				sc.nextLine();
 			}
 		}
@@ -207,58 +207,59 @@ public class CustomerServices {
 		while (start) {
 			System.out.println("============Enter Your Choice==============");
 			System.out.println(
-					" 1.Deposit Ammount \n 2.Withdraw Ammount \n 3.Get Statement \n 4.Check Account Balance \n 5.Update Pin \n 6.Close Account \n 7.Exit");
+					" 1.Deposit Amount \n 2.Withdraw Amount \n 3.Get Statement \n 4.Check Account Balance \n 5.Update Pin \n 6.Close Account \n 7.Exit");
 			switch (sc.nextInt()) {
 			case 1: {
 				while (true) {
-					System.out.println("Enter the Deposit Ammount");
-					int ammount = sc.nextInt();
-					if (ammount > 0) {
-						if (customerDao.depositAmmount(ammount, accNum)) {
-							System.out.println("Deposit of " + ammount + " is successful");
+					System.out.println("Enter the Deposit Amount");
+					int amount = sc.nextInt();
+					if (amount > 0) {
+						if (customerDao.depositAmount(amount, accNum)) {
+							System.out.println("Deposit of " + amount + " is successful");
 							System.out.println("Updated Balance is : " + customerDao.getBalance(accNum));
-							csDao.insertCustomerStatement("credit", customerDao.getBalance(accNum), ammount, accNum,
+							csDao.insertCustomerStatement("credit", customerDao.getBalance(accNum), amount, accNum,
 									getCurrentDateAndTime());
 						} else {
 							System.out.println("deposit failed");
 						}
 						break;
 					} else {
-						System.err.println("Ammount Should be Greater than 0");
+						System.err.println("Amount Should be Greater than 0");
 					}
 				}
 			}
 				break;
 			case 2: {
 				while (true) {
-					System.out.println("Enter the Withdraw Ammount");
-					int ammount = sc.nextInt();
-					if (ammount > 0 && ammount <= customerDao.getBalance(accNum)) {
-						if (customerDao.withdrawAmmount(ammount, accNum)) {
-							System.out.println("Withdraw of " + ammount + " is successful");
+					System.out.println("Enter the Withdraw Amount");
+					int amount = sc.nextInt();
+					if (amount > 0 && amount <= customerDao.getBalance(accNum)) {
+						if (customerDao.withdrawAmmount(amount, accNum)) {
+							System.out.println("Withdraw of " + amount + " is successful");
 							System.out.println("Updated Balance is : " + customerDao.getBalance(accNum));
-							csDao.insertCustomerStatement("debit", customerDao.getBalance(accNum), ammount, accNum,
+							csDao.insertCustomerStatement("debit", customerDao.getBalance(accNum), amount, accNum,
 									getCurrentDateAndTime());
 						} else {
 							System.out.println("withdraw failed");
 						}
 						break;
 					} else {
-						System.err.println("Ammount Should be Greater than 0 and less then available balance");
+						System.err.println("Amount Should be Greater than 0 and less then available balance");
 					}
 				}
 			}
 				break;
 			case 3: {
+
 				if (csDao.getStatementByAccNum(accNum) != null) {
 					System.out.printf("%-15s %-18s %-20s %-20s %-10s%n", "CustomerAccNum", "TransactionType",
 							"TransactionAmmount", "BalanceAmmount", "TransactionDate&Time");
 					System.out.println(
 							"'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''");
 					for (CustomerStatement c : csDao.getStatementByAccNum(accNum)) {
-						System.out.printf("%-20s %-20s %-17s %-15s %-10s%n", c.getCustomer_AccNum(),
-								c.getTransaction_Type(), c.getBalance_Ammount(), c.getTransaction_Ammount(),
-								c.getTransaction_Date_And_Time());
+						System.out.printf("%-20s %-20s %-17s %-15s %-10s%n", c.getCustomerAccNum(),
+								c.getTransactionType(), c.getBalanceAmount(), c.getTransactionAmount(),
+								c.getTransactionDateAndTime());
 					}
 				} else {
 					System.out.println("No Transactions Found");
